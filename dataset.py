@@ -7,6 +7,8 @@ from torch.utils.data import DataLoader,Dataset
 import os
 from PIL import Image
 import torchvision.transforms as transform
+from one_hot_encode import encode
+
 
 # 自定义dataloader
 class Captcha_DataSets(Dataset):
@@ -22,12 +24,12 @@ class Captcha_DataSets(Dataset):
         label = self.images[idx].split(os.path.sep)[-1].split(".")[0]
         if self.transform:
             image = self.transform(image)
-
+        label = encode(label.split("_")[0])
         return image,label
 
 
 if __name__ == '__main__':
-    image_file = "./dataset"
+    image_file = "./dataset/train"
     trams = transform.Compose([
         transform.Grayscale(),
         transform.ToTensor()]

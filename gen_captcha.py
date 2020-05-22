@@ -39,14 +39,16 @@ def random_captcha(captcha_lenght,fliepath):
 
     image = ImageCaptcha()
     captcha_image = Image.open(image.generate(res_captcha))
-    captcha_image.save(fliepath+res_captcha+".png")
+
+    # 加上时间戳避免数据集重复导致图片覆盖
+    captcha_image.save(fliepath+res_captcha+"_"+str(int(time.time()))+".png")
 
     return res_captcha
 
 
 if __name__ == '__main__':
-    while 1:
-        res = random_captcha(4,"./dataset/")
+    for _ in range(1000):
+        res = random_captcha(4,"./dataset/test/")
         print(res)
 
 
